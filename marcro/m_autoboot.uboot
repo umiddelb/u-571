@@ -1,0 +1,8 @@
+# m_autoboot
+# do autoboot for a initialized device
+
+p_conf="default";
+run m_boot_conf;
+run m_boot_legacy;
+false;
+# vim:ft=sh
