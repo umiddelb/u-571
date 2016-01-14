@@ -1,0 +1,29 @@
+# m_run_bootscr
+# load and execute precompiled u-boot script
+#
+# global varable
+# - file name (`bootscr`): _StringValue_
+# - load address (`krnl_addr`): _HexValue_
+#
+# input Parameter
+# - storage class (`p_class`): mmc, usb, sata
+# - storage device (`p_device`): _HexValue_
+# - name prefix (`p_prefix`): _StringValue_
+#
+# return value
+# - true: success / false: error
+
+p_filename=${p_prefix}/${p_conf}/${bootscr};
+p_loadaddr=${krnl_addr};
+if run m_load; then
+  if test ${dbglevel} > 0; then
+    echo Running bootscript from ${p_class}:${p_device}:${p_filename};
+  fi;
+  source ${krnl_addr};
+else
+  if test ${errlevel} > 0; then
+    echo Loading bootscript from ${p_class}:${p_device}:${p_filename} failed!;
+  fi;
+  false;  
+fi;
+# vim:ft=sh

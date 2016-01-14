@@ -1,0 +1,42 @@
+# m_load_kernel
+# load kernel image & device tree binary
+#
+# global varable
+# - file name (`kernel`): _StringValue_
+# - file name (`fdt`): _StringValue_
+#
+# input Parameter
+# - storage class (`p_class`): mmc, usb, sata
+# - storage device (`p_device`): _HexValue_
+# - name prefix (`p_prefix`): _StringValue_
+#
+# return value
+# - true: success / false: error
+if test ${fdt}; then
+  p_filename=${p_prefix}/${p_conf}/${fdt};
+  p_loadaddr=${fdt_addr};
+  if run m_load; then
+    if test ${dbglevel} > 0; then
+      echo Device Tree loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};
+    fi;
+  else
+    if test ${errlevel} > 0; then
+      echo Loading device tree from ${p_class}:${p_device}:${p_filename} failed!;
+    fi;
+    setenv fdt_addr "-";
+  fi;
+fi;
+p_filename=${p_prefix}/${p_conf}/${kernel};
+p_loadaddr=${krnl_addr};
+if run m_load; then
+  if test ${dbglevel} > 0; then
+    echo Kernel image loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};
+  fi;
+  true;
+else
+  if test ${errlevel} > 0; then
+    echo Loading kernel image from ${p_class}:${p_device}:${p_filename} failed!;
+  fi;
+  false;  
+fi;
+# vim:ft=sh

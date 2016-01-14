@@ -1,0 +1,32 @@
+# m_load_initrd
+# load initramfs image
+#
+# global varable
+# - file name (`initrd`): _StringValue_
+# - load address (`initrd_addr`): _HexValue_
+#
+# input Parameter
+# - storage class (`p_class`): mmc, usb, sata
+# - storage device (`p_device`): _HexValue_
+# - name prefix (`p_prefix`): _StringValue_
+#
+# return value
+# - true: success / false: error
+
+if test ${initrd}; then
+  p_filename=${p_prefix}/${p_conf}/${initrd};
+  p_loadaddr=${initrd_addr};
+  if run m_load; then
+    if test ${dbglevel} > 0; then
+      echo Loaded initramfs from ${p_class}:${p_device}:${p_filename};
+    fi;
+    true;
+  else
+    if test ${errlevel} > 0; then
+      echo Loading initramfs from ${p_class}:${p_device}:${p_filename} failed!;
+    fi;
+    setenv initrd_adr "-";
+    false;  
+  fi;
+fi;
+# vim:ft=sh
