@@ -1,7 +1,7 @@
 # m_init_mmc0
 
 p_class="mmc", 
-p_device="0";
+p_device=${mmcdev};
 mmcdev ${p_device}
 if mmc rescan; then
   true;
