@@ -1,0 +1,17 @@
+# m_set_bootargs
+# set kernel boot parameters / arguments 
+#
+# global varable
+# - console (`console`): _StringValue_
+# - baudrate (`baudrate`:115200): _StringValue_
+# - video (`video`): _StringValue_
+#
+# input parameter
+# - root device (`p_rootfs`): _StringValue_
+#
+# output parameter
+# - kernel boot parameters (`bootargs`, _StringValue_): 
+#
+
+setenv bootargs console=tty1 console=${console},${baudrate} root=${p_rootfs} rootwait ro fsck.repair=yes ${video};
+# vim:ft=sh

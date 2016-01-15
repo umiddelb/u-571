@@ -1,16 +1,22 @@
 
 .PHONY: clean all install
 
-all: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
+all: $(patsubst %.uboot,%.env,$(wildcard *.uboot))
 
 install: all
-	cat *.uEnv | sudo fw_setenv -s -
+	cat *.env | sudo fw_setenv -s -
+
+uEnv.txt: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
+	cat *.uEnv | sort > $@
 
 clean:
-	rm -f *.sh *.uEnv
+	rm -f *.sh *.env *.uEnv uEnv.txt
 
 %.sh: %.uboot
 	(echo -n "fw_setenv $* '" ; cat $< | grep -v '^#' | tr -d '\n' | tr -s ' ' ; echo "'" ) > $@	
 
-%.uEnv: %.uboot
+%.env: %.uboot
 	(echo -n "$*\t\t" ; cat $< | grep -v '^#' | tr -d '\n' | tr -s ' ' ; echo ) > $@	
+
+%.uEnv: %.uboot
+	(echo -n "$*=" ; cat $< | grep -v '^#' | tr -d '\n' | tr -s ' ' ; echo ) > $@	

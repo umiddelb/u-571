@@ -1,0 +1,11 @@
+# m_bc_default_mmc0
+#
+# boot a specific configuration
+
+run m_init_board;
+p_conf="default";
+if run m_init_mmc0; then
+ run m_boot_conf
+fi;
+false;
+# vim:ft=sh

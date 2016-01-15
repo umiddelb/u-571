@@ -1,0 +1,18 @@
+# m_boot_conf
+#
+# boot a specific configuration
+ 
+run m_load_env;
+run m_run_bootscr;
+run m_load_initrd;
+run m_set_bootargs;
+if run m_load_kernel; then
+  if test ${kernel} = 'zImage'; then
+    bootz ${krnl_addr} ${initrd_adr} ${fdt_addr};
+  else
+    bootm ${krnl_addr} ${initrd_adr} ${fdt_addr};
+  fi;
+else
+  false;
+fi;
+# vim:ft=sh
