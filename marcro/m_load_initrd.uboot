@@ -13,7 +13,7 @@
 # return value
 # - true: success / false: error
 
-if test ${initrd}; then
+if test -d initrd; then
   p_filename=${p_prefix}/${p_conf}/${initrd};
   p_loadaddr=${initrd_addr};
   if run m_load; then

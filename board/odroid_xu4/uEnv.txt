@@ -1,0 +1,6 @@
+bootrootfs=console=tty1 console=ttySAC2,115200n8 root=/dev/mmcblk0p1 rootwait rw
+governor=conservative
+hdmi_phy_control=hdmi_tx_amp_lvl=31 hdmi_tx_lvl_ch0=3 hdmi_tx_lvl_ch1=3 hdmi_tx_lvl_ch2=3 hdmi_tx_emp_lvl=6 hdmi_clk_amp_lvl=31 hdmi_tx_res=0 HPD=true vout=hdmi
+
+setenv bootargs "${bootrootfs} ${video} smsc95xx.macaddr=${ethaddr} governor=${governor} ${hdmi_phy_control}";
+boot;
