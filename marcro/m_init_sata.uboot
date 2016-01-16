@@ -1,7 +1,7 @@
-# m_init_sata0
+# m_init_sata
 
 p_class="sata"; 
-p_device="0";
+p_device=${satadev};
 if sata init; then
   true;
 else;

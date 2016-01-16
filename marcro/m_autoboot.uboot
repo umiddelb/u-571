@@ -1,8 +1,8 @@
 # m_autoboot
-# do autoboot for a initialized device
+# do autoboot
 
-p_conf="default";
-run m_boot_conf;
-run m_boot_legacy;
+p_prefix=/boot/conf.d;
+p_conf=default;
+run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata;
 false;
 # vim:ft=sh

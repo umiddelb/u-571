@@ -1,4 +1,4 @@
-# m_init_mmc0
+# m_init_mmc
 
 p_class="mmc", 
 p_device=${mmcdev};

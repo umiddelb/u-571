@@ -1,13 +1,12 @@
-# m_bc_default_mmc0_test
+# m_bc_default_mmc_test
 #
-# test for m_bc_default_mmc0
+# test for m_bc_default_mmc
 
-# run m_init_board;
 dbglevel=1;
 errlevel=1;
 p_prefix=/boot/conf.d;
 p_conf=default;
-if run m_init_mmc0; then
+if run m_init_mmc; then
  run m_boot_conf_test;
 fi;
 false;

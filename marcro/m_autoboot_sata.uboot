@@ -1,0 +1,8 @@
+# m_autoboot_sata
+# do autoboot from SATA
+
+if run m_init_sata; then 
+  run m_boot_conf;
+fi;
+false;
+# vim:ft=sh

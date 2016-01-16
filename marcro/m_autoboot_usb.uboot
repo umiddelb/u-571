@@ -1,0 +1,8 @@
+# m_autoboot_usb
+# do autoboot from USB
+
+if run m_init_usb; then 
+  run m_boot_conf;
+fi;
+false;
+# vim:ft=sh

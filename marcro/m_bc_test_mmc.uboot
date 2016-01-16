@@ -1,10 +1,10 @@
-# m_bc_default_mmc0
+# m_bc_test_mmc
 #
 # boot a specific configuration
 
-#run m_init_board;
+p_prefix=/boot/conf.d;
 p_conf=test;
-if run m_init_mmc0; then
+if run m_init_mmc; then
  run m_boot_conf;
 fi;
 false;
