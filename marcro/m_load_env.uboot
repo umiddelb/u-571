@@ -17,13 +17,13 @@ p_filename=${p_prefix}/${p_conf}/${bootenv};
 p_loadaddr=${krnl_addr};
 if run m_load; then
   env import -t ${krnl_addr} ${filesize};
-  if test ${dbglevel} > 0; then
-    echo Importing environment from ${p_class}:${p_device}:${p_filename};
+  if test ${dbglevel} -gt 0; then
+    echo [m_load_env]Importing environment from ${p_class}:${p_device}:${p_filename};
   fi;
   true;
 else
-  if test ${errlevel} > 0; then
-    echo Importing environment from ${p_class}:${p_device}:${p_filename} failed!;
+  if test ${errlevel} -gt 0; then
+    echo [m_load_env]Importing environment from ${p_class}:${p_device}:${p_filename} failed!;
   fi;
   false;  
 fi;

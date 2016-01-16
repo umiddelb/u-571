@@ -1,0 +1,40 @@
+# m_load_fdt
+# load device tree binary
+#
+# global varable
+# - list of file names (`fdt`): _StringValue_
+# - load address (`fdt_addr`): _HexValue_
+#
+# input parameter
+# - storage class (`p_class`): mmc, usb, sata
+# - storage device (`p_device`): _HexValue_
+# - name prefix (`p_prefix`): _StringValue_
+#
+# output parameter
+# - fdt_addr will be set to '-' if no dtb file was loaded
+
+if test -d fdt; then
+  v_success=false;
+  for v_fdt in ${fdt}; do
+    if test ${v_success} = false; then
+      p_filename=${p_prefix}/${p_conf}/kernel/${v_fdt};
+      p_loadaddr=${fdt_addr};
+      if run m_load; then
+        if test ${dbglevel} -gt 0; then
+          echo [m_load_fdt]Device Tree loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};
+        fi;
+        v_success=true;
+      else
+        if test ${errlevel} -gt 0; then
+          echo [m_load_fdt]Loading device tree from ${p_class}:${p_device}:${p_filename} failed!;
+        fi;
+        v_success=false;
+      fi;
+    fi;
+  done;
+  if test ${v_success} = false; then
+    setenv fdt_addr -;
+  fi;
+fi;
+true;
+# vim:ft=sh

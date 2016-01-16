@@ -10,23 +10,22 @@
 # - storage device (`p_device`): _HexValue_
 # - name prefix (`p_prefix`): _StringValue_
 #
-# return value
-# - true: success / false: error
+# output parameter
+# - initrd_addr will be set to '-' if no dtb file was loaded
 
 if test -d initrd; then
   p_filename=${p_prefix}/${p_conf}/${initrd};
   p_loadaddr=${initrd_addr};
   if run m_load; then
-    if test ${dbglevel} > 0; then
-      echo Loaded initramfs from ${p_class}:${p_device}:${p_filename};
+    if test ${dbglevel} -gt 0; then
+      echo [m_load_initrd]Loaded initramfs from ${p_class}:${p_device}:${p_filename};
     fi;
-    true;
   else
-    if test ${errlevel} > 0; then
-      echo Loading initramfs from ${p_class}:${p_device}:${p_filename} failed!;
+    if test ${errlevel} -gt 0; then
+      echo [m_load_initrd]Loading initramfs from ${p_class}:${p_device}:${p_filename} failed!;
     fi;
-    setenv initrd_adr "-";
-    false;  
+    setenv initrd_addr -;
   fi;
 fi;
+true;
 # vim:ft=sh

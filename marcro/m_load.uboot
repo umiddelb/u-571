@@ -14,13 +14,13 @@
 # - true: success / false: error 
 
 if ext2load ${p_class} ${p_device} ${p_loadaddr} ${p_filename}; then
-  if test ${dbglevel} > 0; then
-    echo Loading ${p_class}:${p_device}:${p_filename};
+  if test ${dbglevel} -gt 0; then
+    echo [m_load]Loading ${p_class}:${p_device}:${p_filename};
   fi;
   true;
 else
-  if test ${errlevel} > 0; then
-    echo Loading ${p_class}:${p_device}:${p_filename} failed!;
+  if test ${errlevel} -gt 0; then
+    echo [m_load]Loading ${p_class}:${p_device}:${p_filename} failed!;
   fi;
   false;
 fi;

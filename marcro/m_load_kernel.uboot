@@ -1,9 +1,9 @@
 # m_load_kernel
-# load kernel image & device tree binary
+# load kernel image
 #
 # global varable
 # - file name (`kernel`): _StringValue_
-# - file name (`fdt`): _StringValue_
+# - load address (`krnl_addr`): _HexValue_
 #
 # input Parameter
 # - storage class (`p_class`): mmc, usb, sata
@@ -12,39 +12,17 @@
 #
 # return value
 # - true: success / false: error
-if test -d fdt; then
-  v_success=false;
-  for v_fdt in ${fdt}; do
-    if test ${v_success} = false; then
-      p_filename=${p_prefix}/${p_conf}/${îv_fdt};
-      p_loadaddr=${fdt_addr};
-      if run m_load; then
-        if test ${dbglevel} > 0; then
-          echo Device Tree loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};
-        fi;
-        v_success=true;
-      else
-        if test ${errlevel} > 0; then
-          echo Loading device tree from ${p_class}:${p_device}:${p_filename} failed!;
-        fi;
-        v_success=false;
-      fi;
-    fi;
-  done;
-  if test ${v_success} = false; then
-    setenv fdt_addr "-";
-  fi;
-fi;
-p_filename=${p_prefix}/${p_conf}/${kernel};
+
+p_filename=${p_prefix}/${p_conf}/kernel/${kernel};
 p_loadaddr=${krnl_addr};
 if run m_load; then
-  if test ${dbglevel} > 0; then
-    echo Kernel image loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};
+  if test ${dbglevel} -gt 0; then
+    echo [m_load_kernel]Kernel image loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};
   fi;
   true;
 else
-  if test ${errlevel} > 0; then
-    echo Loading kernel image from ${p_class}:${p_device}:${p_filename} failed!;
+  if test ${errlevel} -gt 0; then
+    echo [m_load_kernel]Loading kernel image from ${p_class}:${p_device}:${p_filename} failed!;
   fi;
   false;  
 fi;

@@ -1,15 +1,15 @@
-# m_boot_conf
+# m_boot_conf_test
 #
-# boot a specific configuration
+# test for m_boot_conf 
  
 run m_load_env;
 run m_run_bootscr;
 run m_set_bootargs;
 if run m_load_kernel && run m_load_initrd && run m_load_fdt; then
   if test ${kernel} = zImage; then
-    bootz ${krnl_addr} ${initrd_addr} ${fdt_addr};
+    echo bootz ${krnl_addr} ${initrd_addr} ${fdt_addr};
   else
-    bootm ${krnl_addr} ${initrd_addr} ${fdt_addr};
+    echo bootm ${krnl_addr} ${initrd_addr} ${fdt_addr};
   fi;
 else
   false;

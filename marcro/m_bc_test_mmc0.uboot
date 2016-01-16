@@ -2,8 +2,8 @@
 #
 # boot a specific configuration
 
-run m_init_board;
-p_conf="test";
+#run m_init_board;
+p_conf=test;
 if run m_init_mmc0; then
  run m_boot_conf;
 fi;
