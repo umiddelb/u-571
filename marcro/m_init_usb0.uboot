@@ -1,6 +1,6 @@
 # m_init_usb0
 
-p_class="usb", 
+p_class="usb"; 
 p_device="0";
 if usb start; then
   if usb dev ${p_device}; then

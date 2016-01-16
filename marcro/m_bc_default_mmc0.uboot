@@ -5,7 +5,7 @@
 run m_init_board;
 p_conf="default";
 if run m_init_mmc0; then
- run m_boot_conf
+ run m_boot_conf;
 fi;
 false;
 # vim:ft=sh

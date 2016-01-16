@@ -13,10 +13,10 @@ clean:
 	rm -f *.sh *.env *.uEnv uEnv.txt
 
 %.sh: %.uboot
-	(echo -n "fw_setenv $* '" ; cat $< | grep -v '^#' | tr -d '\n' | tr -s ' ' ; echo "'" ) > $@	
+	(echo -n "fw_setenv $* '" ; cat $< | grep -v '^#' | tr '\n' ' ' | tr -s ' ' ; echo "'" ) > $@	
 
 %.env: %.uboot
-	(echo -n "$*\t\t" ; cat $< | grep -v '^#' | tr -d '\n' | tr -s ' ' ; echo ) > $@	
+	(echo -n "$*\t\t" ; cat $< | grep -v '^#' | tr '\n' ' ' | tr -s ' ' ; echo ) > $@	
 
 %.uEnv: %.uboot
-	(echo -n "$*=" ; cat $< | grep -v '^#' | tr -d '\n' | tr -s ' ' ; echo ) > $@	
+	(echo -n "$*=" ; cat $< | grep -v '^#' | tr '\n' ' '| tr -s ' ' ; echo ) > $@	

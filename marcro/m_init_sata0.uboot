@@ -1,6 +1,6 @@
 # m_init_sata0
 
-p_class="sata", 
+p_class="sata"; 
 p_device="0";
 if sata init; then
   true;
