@@ -1,9 +1,9 @@
-# m_bc_default_mmc
+# m_bc_failsafe_mmc
 #
 # boot a specific configuration
 
 p_prefix=${prefix};
-p_conf=default;
+p_conf=failsafe;
 if run m_init_mmc; then
  run m_boot_conf;
 fi;

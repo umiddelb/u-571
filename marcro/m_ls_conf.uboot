@@ -1,0 +1,2 @@
+ext2ls ${p_class} ${p_device} ${p_prefix}
+# vim:ft=sh

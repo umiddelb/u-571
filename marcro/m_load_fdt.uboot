@@ -13,7 +13,7 @@
 # output parameter
 # - fdt_addr will be set to '-' if no dtb file was loaded
 
-if test -d fdt; then
+if test -n ${fdt}; then
   v_success=false;
   for v_fdt in ${fdt}; do
     if test ${v_success} = false; then
@@ -35,6 +35,8 @@ if test -d fdt; then
   if test ${v_success} = false; then
     setenv fdt_addr -;
   fi;
+else
+  setenv fdt_addr -;
 fi;
 true;
 # vim:ft=sh

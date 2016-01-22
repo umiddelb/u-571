@@ -4,7 +4,7 @@
 
 dbglevel=1;
 errlevel=1;
-p_prefix=/boot/conf.d;
+p_prefix=${prefix};
 p_conf=default;
 if run m_init_mmc; then
  run m_boot_conf_test;

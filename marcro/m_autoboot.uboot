@@ -1,7 +1,7 @@
 # m_autoboot
 # do autoboot
 
-p_prefix=/boot/conf.d;
+p_prefix=${prefix};
 p_conf=default;
 run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata;
 false;
