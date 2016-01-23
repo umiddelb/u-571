@@ -13,7 +13,7 @@
 # output parameter
 # - initrd_addr will be set to '-' if no dtb file was loaded
 
-if test -n ${initrd}; then
+if test ${initrd} != ""; then
   p_filename=${p_prefix}/${p_conf}/${initrd};
   p_loadaddr=${initrd_addr};
   if run m_load; then

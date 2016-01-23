@@ -13,7 +13,7 @@
 # return value
 # - true: success / false: error
 
-if test -n ${bootscr}; then
+if test ${bootscr} != ""; then
   p_filename=${p_prefix}/${p_conf}/${bootscr};
   p_loadaddr=${krnl_addr};
   if run m_load; then

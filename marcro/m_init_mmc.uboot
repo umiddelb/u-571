@@ -2,8 +2,8 @@
 
 p_class="mmc", 
 p_device=${mmcdev};
-# mmcdev ${p_device};
-if mmc rescan; then
+mmc dev ${p_device};
+if mmc rescan || test ${board} = "odroid-c1"; then
   true;
 else;
   false;

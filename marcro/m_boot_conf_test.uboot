@@ -6,6 +6,9 @@ run m_load_env;
 run m_run_bootscr;
 run m_set_bootargs;
 if run m_load_kernel && run m_load_initrd && run m_load_fdt; then
+  if test ${run_pre_boot} = 1; then
+    run m_pre_boot;
+  fi;
   if test ${kernel} = zImage; then
     echo bootz ${krnl_addr} ${initrd_addr} ${fdt_addr};
   else
