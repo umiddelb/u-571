@@ -1,0 +1,33 @@
+# m_load_ramdisk
+# load ramdisk image
+#
+# global varable
+# - file name (`ramdisk`): _StringValue_
+# - load address (`ramdisk_addr_r`): _HexValue_
+#
+# input Parameter
+# - storage class (`p_class`): mmc, usb, sata
+# - storage device (`p_device`): _HexValue_
+# - name prefix (`p_prefix`): _StringValue_
+#
+# output parameter
+# - ramdisk_addr_r will be set to '-' if no dtb file was loaded
+
+if test ${ramdisk} != ""; then
+  p_filename=${p_prefix}/${p_conf}/${ramdisk};
+  p_loadaddr=${ramdisk_addr_r};
+  if run m_load; then
+    if test ${dbglevel} -gt 0; then
+      echo [m_load_ramdisk]Loaded ramdisk from ${p_class}:${p_device}:${p_filename};
+    fi;
+  else
+    if test ${errlevel} -gt 0; then
+      echo [m_load_ramdisk]Loading ramdisk from ${p_class}:${p_device}:${p_filename} failed!;
+    fi;
+    setenv ramdisk_addr_r -;
+  fi;
+else
+  setenv ramdisk_addr_r -;
+fi;
+true;
+# vim:ft=sh

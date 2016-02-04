@@ -3,7 +3,7 @@
 #
 # global varable
 # - file name (`kernel`): _StringValue_
-# - load address (`krnl_addr`): _HexValue_
+# - load address (`kernel_addr_r`): _HexValue_
 #
 # input Parameter
 # - storage class (`p_class`): mmc, usb, sata
@@ -14,7 +14,7 @@
 # - true: success / false: error
 
 p_filename=${p_prefix}/${p_conf}/kernel/${kernel};
-p_loadaddr=${krnl_addr};
+p_loadaddr=${kernel_addr_r};
 if run m_load; then
   if test ${dbglevel} -gt 0; then
     echo [m_load_kernel]Kernel image loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize};

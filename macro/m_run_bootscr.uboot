@@ -3,7 +3,7 @@
 #
 # global varable
 # - file name (`bootscr`): _StringValue_
-# - load address (`krnl_addr`): _HexValue_
+# - load address (`kernel_addr_r`): _HexValue_
 #
 # input Parameter
 # - storage class (`p_class`): mmc, usb, sata
@@ -15,12 +15,12 @@
 
 if test ${bootscr} != ""; then
   p_filename=${p_prefix}/${p_conf}/${bootscr};
-  p_loadaddr=${krnl_addr};
+  p_loadaddr=${scriptaddr};
   if run m_load; then
     if test ${dbglevel} -gt 0; then
       echo [m_run_bootscr]Running bootscript from ${p_class}:${p_device}:${p_filename};
     fi;
-    source ${krnl_addr};
+    source ${scriptaddr};
   else
     if test ${errlevel} -gt 0; then
       echo [m_run_bootscr]Loading bootscript from ${p_class}:${p_device}:${p_filename} failed!;
