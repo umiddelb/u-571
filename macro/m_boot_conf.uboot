@@ -9,10 +9,14 @@ if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then
   if test ${run_pre_boot} = 1; then
     run m_pre_boot;
   fi;
-  if test ${kernel} = zImage; then
-    bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
+  if test ${kernel} = Image; then
+    booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
   else
-    bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
+    if test ${kernel} = zImage; then
+      bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
+    else
+      bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
+    fi;
   fi;
 else
   false;

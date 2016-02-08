@@ -5,6 +5,6 @@ k_enabledac=enabledac
 k_governor=governor=conservative
 k_logo=logo=osd1,loaded,0x7900000,720p,full
 k_video=no_console_suspend vdaccfg=0xa000 dmfc=3 cvbsmode=576cvbs hdmimode=1080p m_bpp=32 vout=hdmi disablehpd=true
-m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} k{k_disableuhs} ${k_enabledac} ${k_governor} ${k_logo} ${k_video}";
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} {k_disableuhs} ${k_enabledac} ${k_governor} ${k_logo} ${k_video}";
 run_pre_boot=1
 m_pre_boot=fdt addr 21800000; fdt rm /mesonstream; fdt rm /vdec; fdt rm /ppmgr; fdt rm /mesonfb;

@@ -6,6 +6,9 @@ all: $(patsubst %.uboot,%.env,$(wildcard *.uboot))
 install: all
 	cat *.env | sudo fw_setenv -s -
 
+install.ext4: all
+	cat *.env | sed -e 's/ext2/ext4/g' | sudo fw_setenv -s -
+
 uEnv.txt: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
 	cat *.uEnv | sort > $@
 
