@@ -1,3 +1,4 @@
+bootscr=
 k_console=console=tty0 console=ttyS0,115200n8
 k_rootfs=root=/dev/mmcblk0p1 rootwait rw
 k_governor=governor=conservative
