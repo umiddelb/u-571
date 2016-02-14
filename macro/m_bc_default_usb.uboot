@@ -1,0 +1,10 @@
+# m_bc_default_usb
+#
+# boot a specific configuration
+
+p_prefix=${prefix};
+p_conf=default;
+run m_init_usb; 
+run m_boot_conf;
+false;
+# vim:ft=sh
