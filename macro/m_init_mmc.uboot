@@ -3,7 +3,7 @@
 p_class="mmc", 
 p_device=${mmcdev};
 mmc dev ${p_device};
-if mmc rescan || test ${board} = "odroid-c1"; then
+if mmc rescan || test ${board} = "odroid-c1" || test ${board} = "pine64+" ; then
   true;
 else;
   false;

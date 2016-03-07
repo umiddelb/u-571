@@ -12,14 +12,17 @@ install.ext4: all
 uEnv.txt: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
 	cat *.uEnv | sort > $@
 
+uEnv.ext4.txt: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
+	cat *.uEnv | sed -e 's/ext2/ext4/g' | sort > $@
+
 clean:
-	rm -f *.sh *.env *.uEnv uEnv.txt
+	rm -f *.sh *.env *.uEnv uEnv.txt uEnv.ext4.txt
 
 %.sh: %.uboot
-	(echo -n "fw_setenv $* '" ; cat $< | grep -v '^#' | tr '\n' ' ' | tr -s ' ' ; echo "'" ) > $@	
+	(echo -n "fw_setenv $* '" ; cat $< | grep -v '^#' | tr '\n' ' ' | tr -s ' ' ; echo "'" ) > $@
 
 %.env: %.uboot
-	(echo -n "$*\t\t" ; cat $< | grep -v '^#' | tr '\n' ' ' | tr -s ' ' ; echo ) > $@	
+	(echo -n "$*\t\t" ; cat $< | grep -v '^#' | tr '\n' ' ' | tr -s ' ' ; echo ) > $@
 
 %.uEnv: %.uboot
-	(echo -n "$*=" ; cat $< | grep -v '^#' | tr '\n' ' '| tr -s ' ' ; echo ) > $@	
+	(echo -n "$*=" ; cat $< | grep -v '^#' | tr '\n' ' '| tr -s ' ' ; echo ) > $@

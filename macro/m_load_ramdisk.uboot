@@ -13,7 +13,7 @@
 # output parameter
 # - ramdisk_addr_r will be set to '-' if no dtb file was loaded
 
-if test ${ramdisk} != ""; then
+if test "${ramdisk}" != ""; then
   p_filename=${p_prefix}/${p_conf}/${ramdisk};
   p_loadaddr=${ramdisk_addr_r};
   if run m_load; then
