@@ -17,6 +17,7 @@ if test "${ramdisk}" != ""; then
   p_filename=${p_prefix}/${p_conf}/${ramdisk};
   p_loadaddr=${ramdisk_addr_r};
   if run m_load; then
+    setenv ramdisk_size ${filesize};
     if test ${dbglevel} -gt 0; then
       echo [m_load_ramdisk]Loaded ramdisk from ${p_class}:${p_device}:${p_filename};
     fi;

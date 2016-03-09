@@ -1,0 +1,13 @@
+# m_bc_default_mmc_test
+#
+# test for m_bc_default_mmc
+
+dbglevel=1;
+errlevel=1;
+p_prefix=${prefix};
+p_conf=test;
+if run m_init_mmc; then
+ run m_boot_conf_test;
+fi;
+false;
+# vim:ft=sh
