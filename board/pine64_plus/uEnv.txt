@@ -1,7 +1,6 @@
 bootscr=
-ramdisk=
 k_console=console=tty0 console=ttyS0,115200n8 earlycon=uart,mmio32,0x01c28000
-k_rootfs=root=/dev/mmcblk0p2 rootwait ro fsck.repair=yes
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait ro fsck.repair=yes
 k_governor=governor=conservative
 k_video=no_console_suspend
 k_net=mac_addr=${ethaddr}

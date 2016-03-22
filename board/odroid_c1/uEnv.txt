@@ -1,5 +1,5 @@
 k_console=console=tty0 console=ttyS0,115200n8
-k_rootfs=root=/dev/mmcblk0p1 rootwait rw
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw
 k_disableuhs=disableuhs
 k_enabledac=enabledac
 k_governor=governor=conservative
