@@ -4,17 +4,17 @@
 # global varable
 # - file name (`bootscr`): _StringValue_
 # - load address (`kernel_addr_r`): _HexValue_
+# - name prefix (`prefix`): _StringValue_
 #
 # input Parameter
 # - storage class (`p_class`): mmc, usb, sata
 # - storage device (`p_device`): _HexValue_
-# - name prefix (`p_prefix`): _StringValue_
 #
 # return value
 # - true: success / false: error
 
 if test "${bootscr}" != ""; then
-  p_filename=${p_prefix}/${p_conf}/${bootscr};
+  p_filename=${prefix}/${p_conf}/${bootscr};
   p_loadaddr=${scriptaddr};
   if run m_load; then
     if test ${dbglevel} -gt 0; then

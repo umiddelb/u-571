@@ -2,7 +2,6 @@
 #
 # boot a specific configuration
 
-p_prefix=${prefix};
 p_conf=default;
 run m_init_usb; 
 run m_boot_conf;

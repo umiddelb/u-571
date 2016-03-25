@@ -4,11 +4,11 @@
 # global varable
 # - list of file names (`fdt`): _StringValue_
 # - load address (`fdt_addr_r`): _HexValue_
+# - name prefix (`prefix`): _StringValue_
 #
 # input parameter
 # - storage class (`p_class`): mmc, usb, sata
 # - storage device (`p_device`): _HexValue_
-# - name prefix (`p_prefix`): _StringValue_
 #
 # output parameter
 # - fdt_addr_r will be set to '-' if no dtb file was loaded
@@ -17,7 +17,7 @@ if test "${fdt}" != ""; then
   v_success=false;
   for v_fdt in ${fdt}; do
     if test ${v_success} = false; then
-      p_filename=${p_prefix}/${p_conf}/kernel/${v_fdt};
+      p_filename=${prefix}/${p_conf}/kernel/${v_fdt};
       p_loadaddr=${fdt_addr_r};
       if run m_load; then
         if test ${dbglevel} -gt 0; then

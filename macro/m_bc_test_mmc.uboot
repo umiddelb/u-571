@@ -2,7 +2,6 @@
 #
 # boot a specific configuration
 
-p_prefix=${prefix};
 p_conf=test;
 if run m_init_mmc; then
  run m_boot_conf;
