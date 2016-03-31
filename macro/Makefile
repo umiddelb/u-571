@@ -9,10 +9,10 @@ install: all
 install.ext4: all
 	cat *.env | sed -e 's/ext2/ext4/g' | sudo fw_setenv -s -
 
-uEnv.txt: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
+macro.uEnv: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
 	cat *.uEnv | sort > $@
 
-uEnv.ext4.txt: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
+macro.ext4.uEnv: $(patsubst %.uboot,%.uEnv,$(wildcard *.uboot))
 	cat *.uEnv | sed -e 's/ext2/ext4/g' | sort > $@
 
 clean:

@@ -1,0 +1,60 @@
+baudrate=115200
+board=odroid-c2
+bootcmd=run m_autoboot;
+bootenv=uEnv.txt
+bootdelay=5
+bootscr=boot.scr
+console         ttyS0
+cpu=s905
+dbglevel=0
+errlevel=0
+fdt=meson64_odroidc2.dtb
+fdt_addr_r=0x01000000
+fdt_high=0x20000000
+ramdisk=uInitrd
+ramdisk_addr_r=0x13000000
+initrd_high=0x60000000
+kernel=Image
+kernel_addr_r=0x11000000
+mmcdev=0
+prefix=/boot/conf.d
+satadev=0
+scriptaddr      0x11000000
+stderr=serial,vga
+stdin=serial,usbkbd
+stdout=serial,vga
+usbdev=0
+k_console=console=tty0 console=ttyS0,115200n8
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
+k_governor=governor=conservative
+k_video=no_console_suspend hdmimode=1080p60hz m_bpp=32
+m_bc_m0p1=setenv mmcdev 0:1; run m_bc_default_mmc;
+m_bc_m0p2=setenv mmcdev 0:2; run m_bc_default_mmc;
+m_bc_m1p1=setenv mmcdev 1:1; run m_bc_default_mmc;
+m_bc_u0p1=setenv usbdev 0:1; run m_bc_default_usb;
+m_bc_u0p2=setenv usbdev 0:2; run m_bc_default_usb;
+m_bc_u0p3=setenv usbdev 0:3; run m_bc_default_usb;
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
+run_pre_boot=0
+m_autoboot_mmc= if run m_init_mmc; then run m_boot_conf; fi; false; 
+m_autoboot= p_conf=default; run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata; false; 
+m_autoboot_sata= if run m_init_sata; then run m_boot_conf; fi; false; 
+m_autoboot_usb= if run m_init_usb; then run m_boot_conf; fi; false; 
+m_bc_default_mmc= p_conf=default; if run m_init_mmc; then run m_boot_conf; fi; false; 
+m_bc_default_mmc_test= dbglevel=1; errlevel=1; p_conf=default; if run m_init_mmc; then run m_boot_conf_test; fi; false; 
+m_bc_default_usb= p_conf=default; run m_init_usb; run m_boot_conf; false; 
+m_bc_failsafe_mmc= p_conf=failsafe; if run m_init_mmc; then run m_boot_conf; fi; false; 
+m_bc_test_mmc= p_conf=test; if run m_init_mmc; then run m_boot_conf; fi; false; 
+m_bc_test_mmc_test= dbglevel=1; errlevel=1; p_conf=test; if run m_init_mmc; then run m_boot_conf_test; fi; false; 
+m_boot_conf= run m_load_env; run m_run_bootscr; run m_set_bootargs; if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then if test ${run_pre_boot} = 1; then run m_pre_boot; fi; if test ${ramdisk} = Initrd; then if test "${ramdisk_addr_r}" != "-"; then setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}"; fi; fi; if test ${kernel} = Image; then booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${kernel} = zImage; then bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; fi; fi; else false; fi; 
+m_boot_conf_test= run m_load_env; run m_run_bootscr; run m_set_bootargs; if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then if test ${run_pre_boot} = 1; then run m_pre_boot; fi; if test ${ramdisk} = Initrd; then if test "${ramdisk_addr_r}" != "-"; then setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}"; fi; fi; if test ${kernel} = Image; then echo booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${kernel} = zImage; then echo bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else echo bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; fi; fi; else false; fi; 
+m_init_mmc= p_class="mmc", p_device=${mmcdev}; mmc dev ${p_device}; if mmc rescan || test ${board} = "odroid-c1" || test ${board} = "pine64" ; then true; else; false; fi; 
+m_init_sata= p_class="sata"; p_device=${satadev}; if sata init; then true; else; false; fi; 
+m_init_usb= p_class="usb"; p_device=${usbdev}; if usb start; then if usb dev ${p_device}; then true; fi; fi; false; 
+m_load_env= p_filename=${prefix}/${p_conf}/${bootenv}; p_loadaddr=${kernel_addr_r}; if run m_load; then env import -t ${kernel_addr_r} ${filesize}; if test ${dbglevel} -gt 0; then echo [m_load_env]Importing environment from ${p_class}:${p_device}:${p_filename}; fi; true; else if test ${errlevel} -gt 0; then echo [m_load_env]Importing environment from ${p_class}:${p_device}:${p_filename} failed!; fi; false; fi; 
+m_load_fdt= if test "${fdt}" != ""; then v_success=false; for v_fdt in ${fdt}; do if test ${v_success} = false; then p_filename=${prefix}/${p_conf}/kernel/${v_fdt}; p_loadaddr=${fdt_addr_r}; if run m_load; then if test ${dbglevel} -gt 0; then echo [m_load_fdt]Device Tree loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize}; fi; v_success=true; else if test ${errlevel} -gt 0; then echo [m_load_fdt]Loading device tree from ${p_class}:${p_device}:${p_filename} failed!; fi; v_success=false; fi; fi; done; if test ${v_success} = false; then setenv fdt_addr_r -; fi; else setenv fdt_addr_r -; fi; true; 
+m_load= if ext4load ${p_class} ${p_device} ${p_loadaddr} ${p_filename}; then if test ${dbglevel} -gt 0; then echo [m_load]Loading ${p_class}:${p_device}:${p_filename}; fi; true; else if test ${errlevel} -gt 0; then echo [m_load]Loading ${p_class}:${p_device}:${p_filename} failed!; fi; false; fi; 
+m_load_kernel= p_filename=${prefix}/${p_conf}/kernel/${kernel}; p_loadaddr=${kernel_addr_r}; if run m_load; then if test ${dbglevel} -gt 0; then echo [m_load_kernel]Kernel image loaded from ${p_class}:${p_device}:${p_filename}, size ${filesize}; fi; true; else if test ${errlevel} -gt 0; then echo [m_load_kernel]Loading kernel image from ${p_class}:${p_device}:${p_filename} failed!; fi; false; fi; 
+m_load_ramdisk= if test "${ramdisk}" != ""; then p_filename=${prefix}/${p_conf}/${ramdisk}; p_loadaddr=${ramdisk_addr_r}; if run m_load; then setenv ramdisk_size ${filesize}; if test ${dbglevel} -gt 0; then echo [m_load_ramdisk]Loaded ramdisk from ${p_class}:${p_device}:${p_filename}; fi; else if test ${errlevel} -gt 0; then echo [m_load_ramdisk]Loading ramdisk from ${p_class}:${p_device}:${p_filename} failed!; fi; setenv ramdisk_addr_r -; fi; else setenv ramdisk_addr_r -; fi; true; 
+m_ls_conf=ext4ls ${p_class} ${p_device} ${prefix} 
+m_run_bootscr= if test "${bootscr}" != ""; then p_filename=${prefix}/${p_conf}/${bootscr}; p_loadaddr=${scriptaddr}; if run m_load; then if test ${dbglevel} -gt 0; then echo [m_run_bootscr]Running bootscript from ${p_class}:${p_device}:${p_filename}; fi; source ${scriptaddr}; else if test ${errlevel} -gt 0; then echo [m_run_bootscr]Loading bootscript from ${p_class}:${p_device}:${p_filename} failed!; fi; false; fi; fi; 
