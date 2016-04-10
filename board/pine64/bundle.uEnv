@@ -29,7 +29,8 @@ m_bc_m0p3=setenv mmcdev 0:3; run m_bc_default_mmc;
 m_bc_u0p1=setenv usbdev 0:1; run m_bc_default_usb;
 m_bc_u0p2=setenv usbdev 0:2; run m_bc_default_usb;
 m_bc_u0p3=setenv usbdev 0:3; run m_bc_default_usb;
-m_board_init=ext4load mmc 0:2 ${kernel_addr_r} /boot/bundle.uEnv; env import -t ${kernel_addr_r} ${filesize};
+m_board_init=fatload mmc 0:1 ${kernel_addr_r} /bundle.uEnv; env import -t ${kernel_addr_r} ${filesize};
+m_board_init2=ext4load mmc 0:2 ${kernel_addr_r} /boot/bundle.uEnv; env import -t ${kernel_addr_r} ${filesize};
 m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${knet} ${k_governor} ${k_video}";
 run_pre_boot=0
 m_autoboot= p_conf=default; run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata; false; 
