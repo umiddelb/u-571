@@ -9,7 +9,7 @@ if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then
   if test ${run_pre_boot} = 1; then
     run m_pre_boot;
   fi;
-  if test ${ramdisk} = Initrd; then
+  if test ${board} = "pine64+"; then
     if test "${ramdisk_addr_r}" != "-"; then
       setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}";
     fi;
