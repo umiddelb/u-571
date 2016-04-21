@@ -29,7 +29,7 @@ stdin=serial,usbkbd
 stdout=serial,vga
 usbdev=0
 k_console=console=tty0 console=ttymxc0,115200
-k_rootfs=root=/dev/sda1 rootwait rw
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw
 k_governor=governor=conservative
 m_bc_m0p1=setenv mmcdev 0:1; p_conf=default; run m_autoboot_mmc;
 m_bc_m0p2=setenv mmcdev 0:2; p_conf=default; run m_autoboot_mmc;

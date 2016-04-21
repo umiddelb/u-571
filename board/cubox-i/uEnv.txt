@@ -1,5 +1,5 @@
 k_console=console=tty0 console=ttymxc0,115200
-k_rootfs=root=/dev/sda1 rootwait rw
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw
 k_governor=governor=conservative
 k_video=
 m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
