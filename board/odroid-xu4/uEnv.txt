@@ -1,6 +1,7 @@
 k_console=console=tty1 console=ttySAC2,115200n8
 k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw
 k_governor=governor=conservative
+k_net=net.ifnames=0
 k_video=hdmi_tx_amp_lvl=31 hdmi_tx_lvl_ch0=3 hdmi_tx_lvl_ch1=3 hdmi_tx_lvl_ch2=3 hdmi_tx_emp_lvl=6 hdmi_clk_amp_lvl=31 hdmi_tx_res=0 HPD=true vout=hdmi video=HDMI-A-1:1920x1080@60
-m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_net} ${k_video}";
 run_pre_boot=0
