@@ -13,6 +13,7 @@ ethprime=FEC
 fdt             imx6q-cubox-i.dtb
 fdt_addr_r=0x18000000
 fdt_high=0xffffffff
+ramdisk=kernel/uInitrd
 ramdisk_addr_r=0x1A000000
 initrd_high=0xffffffff
 ip_dyn=yes
@@ -41,6 +42,7 @@ run_pre_boot=0
 m_autoboot_mmc= if run m_init_mmc; then run m_boot_conf; fi; false; 
 m_autoboot= p_conf=default; run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata; false; 
 m_autoboot_sata= if run m_init_sata; then run m_boot_conf; fi; false; 
+m_autoboot_sata_test= dbglevel=1; errlevel=1; if run m_init_sata; then run m_boot_conf_test; fi; false; 
 m_autoboot_usb= if run m_init_usb; then run m_boot_conf; fi; false; 
 m_bc_default_mmc= p_conf=default; if run m_init_mmc; then run m_boot_conf; fi; false; 
 m_bc_default_mmc_test= dbglevel=1; errlevel=1; p_conf=default; if run m_init_mmc; then run m_boot_conf_test; fi; false; 
@@ -48,8 +50,8 @@ m_bc_default_usb= p_conf=default; run m_init_usb; run m_boot_conf; false;
 m_bc_failsafe_mmc= p_conf=failsafe; if run m_init_mmc; then run m_boot_conf; fi; false; 
 m_bc_test_mmc= p_conf=test; if run m_init_mmc; then run m_boot_conf; fi; false; 
 m_bc_test_mmc_test= dbglevel=1; errlevel=1; p_conf=test; if run m_init_mmc; then run m_boot_conf_test; fi; false; 
-m_boot_conf= run m_load_env; run m_run_bootscr; run m_set_bootargs; if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then if test ${run_pre_boot} = 1; then run m_pre_boot; fi; if test ${board} = "pine64+"; then if test "${ramdisk_addr_r}" != "-"; then setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}"; fi; fi; if test ${kernel} = Image; then booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${kernel} = zImage; then bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; fi; fi; else false; fi; 
-m_boot_conf_test= run m_load_env; run m_run_bootscr; run m_set_bootargs; if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then if test ${run_pre_boot} = 1; then run m_pre_boot; fi; if test ${board} = "pine64+"; then if test "${ramdisk_addr_r}" != "-"; then setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}"; fi; fi; if test ${kernel} = Image; then echo booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${kernel} = zImage; then echo bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else echo bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; fi; fi; else false; fi; 
+m_boot_conf= run m_load_env; run m_run_bootscr; run m_set_bootargs; if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then if test ${run_pre_boot} = 1; then run m_pre_boot; fi; if test ${board} = "pine64+"; then if test "${ramdisk_addr_r}" != "-"; then setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}"; fi; fi; if test ${kernel} = Image; then booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${kernel} = zImage; then bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${fdt_addr_r} = "-"; then bootm ${kernel_addr_r}; else bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; fi; fi; fi; else false; fi; 
+m_boot_conf_test= run m_load_env; run m_run_bootscr; run m_set_bootargs; if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then if test ${run_pre_boot} = 1; then run m_pre_boot; fi; if test ${board} = "pine64+"; then if test "${ramdisk_addr_r}" != "-"; then setenv ramdisk_addr_r "${ramdisk_addr_r}:${ramdisk_size}"; fi; fi; if test ${kernel} = Image; then echo booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${kernel} = zImage; then echo bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; else if test ${fdt_addr_r} = "-"; then echo bootm ${kernel_addr_r}; else echo bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}; fi; fi; fi; else false; fi; 
 m_init_mmc= p_class="mmc", p_device=${mmcdev}; mmc dev ${p_device}; if mmc rescan || test ${board} = "odroid-c1" || test ${board} = "pine64+" ; then true; else; false; fi; 
 m_init_sata= p_class="sata"; p_device=${satadev}; if sata init; then true; else; false; fi; 
 m_init_usb= p_class="usb"; p_device=${usbdev}; if usb start; then if usb dev ${p_device}; then true; fi; fi; false; 

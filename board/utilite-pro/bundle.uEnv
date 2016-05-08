@@ -13,6 +13,7 @@ ethprime=FEC
 fdt             imx6q-sbc-fx6m.dtb
 fdt_addr_r=0x18000000
 fdt_high=0xffffffff
+ramdisk=kernel/uInitrd
 ramdisk_addr_r=0x1A000000
 initrd_high=0xffffffff
 ip_dyn=yes
