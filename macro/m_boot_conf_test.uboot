@@ -20,7 +20,11 @@ if run m_load_kernel && run m_load_ramdisk && run m_load_fdt; then
     if test ${kernel} = zImage; then
       echo bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
     else
-      echo bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
+      if test ${fdt_addr_r} = "-"; then
+        echo bootm ${kernel_addr_r};
+      else
+        echo bootm ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r};
+      fi;
     fi;
   fi;
 else

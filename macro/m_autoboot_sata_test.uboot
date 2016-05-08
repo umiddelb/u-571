@@ -1,0 +1,10 @@
+# m_autoboot_sata
+# do autoboot from SATA
+
+dbglevel=1;
+errlevel=1;
+if run m_init_sata; then 
+  run m_boot_conf_test;
+fi;
+false;
+# vim:ft=sh
