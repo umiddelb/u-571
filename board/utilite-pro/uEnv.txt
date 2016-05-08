@@ -1,7 +1,4 @@
 bootscr=
-fdt=
-ramdisk=
-kernel=uImage
 k_console=console=tty0 console=ttymxc3,115200
 k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw
 k_governor=governor=conservative
