@@ -65,40 +65,40 @@ The following u-boot variables are defined in the initial default environment an
 
 ## Typical boot sequence
 
-1. [`m_autoboot`](https://github.com/umiddelb/u-571/blob/master/macro/m_autoboot.uboot)
+### [`m_autoboot`](https://github.com/umiddelb/u-571/blob/master/macro/m_autoboot.uboot)
 The macro `m_autoboot` implements the boot priority. You can tell u-boot to try to boot from USB first (`run m_autoboot_usb`) then to try from SATA (`run m_autoboot_sata`) and finally to boot from MMC (`run m_autoboot_usb`).
 
-1. [`m_autoboot_*`](https://github.com/umiddelb/u-571/blob/master/macro/m_autoboot_mmc.uboot)
+### [`m_autoboot_*`](https://github.com/umiddelb/u-571/blob/master/macro/m_autoboot_mmc.uboot)
 This macro initializes the boot device and calls `m_boot_conf`.
 
-1. [`m_boot_conf`](https://github.com/umiddelb/u-571/blob/master/macro/m_boot_conf.uboot)
+### [`m_boot_conf`](https://github.com/umiddelb/u-571/blob/master/macro/m_boot_conf.uboot)
 This is the main loop which boots a certain configuration (`p_conf`) from a specific device.
 
-  1. [`m_load_env`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_env.uboot)
+#### [`m_load_env`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_env.uboot)
 This macro looks for a text file called `uEnv.txt` inside of the configuration directory (`$prefix/$p_conf`), loads its contents and merges them with the existing u-boot environment by overriding values of existing variables.
 
-  1. [`m_run_bootscr`](https://github.com/umiddelb/u-571/blob/master/macro/m_run_bootscr.uboot)
+#### [`m_run_bootscr`](https://github.com/umiddelb/u-571/blob/master/macro/m_run_bootscr.uboot)
 This macro looks for a file called `boot.scr` inside of the configuration directory, load the file and execute its contents (usually without returning back). `boot.scr` contains compiled u-boot commands in a binary format. This step is optional.
 
-  1. [`m_set_bootargs`](https://github.com/umiddelb/u-571/blob/master/macro/m_run_bootscr.uboot)
+#### [`m_set_bootargs`](https://github.com/umiddelb/u-571/blob/master/macro/m_run_bootscr.uboot)
 This macro composes the kernel command line by setting the u-boot variable `bootargs`. 
  
-  1. [`m_load_kernel`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_kernel.uboot)
+#### [`m_load_kernel`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_kernel.uboot)
 This macro loads the kernel image from `$prefix/$p_conf/kernel/$kernel`.
 
-  1. [`m_load_ramdisk`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_ramdisk.uboot)
+#### [`m_load_ramdisk`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_ramdisk.uboot)
 This macro loads the initial ramdisk archive from `$prefix/$p_conf/$ramdisk`.
 The archive is created and updated by using the `update-initramfs` utility, which is usually done when a new kernel image has been installed. Allthough the kernel will boot without an initial ramdisk, most up-to-date Linux distributions will benefit from it. 
 
-  1. [`m_load_fdt`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_fdt.uboot)
+#### [`m_load_fdt`](https://github.com/umiddelb/u-571/blob/master/macro/m_load_fdt.uboot)
 This macro loads the device tree binary from `$prefix/$p_conf/kernel/$fdt`.
 The Linux kernel an ARM needs a low level device description (device tree) in binary format, either appended to the kernel image or as a separate file. Many platforms prefer loading the device tree binary as a separate file, which offers more flexibility, allowing distribution of a single installation image for different platforms, or tweaking of the device tree for different use cases (see `m_pre_boot`).
 The variable `ftd` may contain a [list of names](https://github.com/umiddelb/u-571/blob/master/board/odroid-xu4/board_init.env#L11) (delimetered by a whitespace), which will be probed subsequently. 
 
-  1. [`m_pre_boot`](https://github.com/umiddelb/u-571/blob/master/board/odroid-c1/uEnv.txt#L11)
+#### [`m_pre_boot`](https://github.com/umiddelb/u-571/blob/master/board/odroid-c1/uEnv.txt#L11)
 In some case you want to modify the device tree after beeing loaded into memory. This macro is called immediately before the `boot*` command is issued. und Some use case require a modification of the already loaded device tree This macro 
 
-  1. Depending on the kernel format (denoted by the actual file name), the kernel image will be booted via `booti`, `bootz` or `bootm`.
+#### Depending on the kernel format (denoted by the actual file name), the kernel image will be booted via `booti`, `bootz` or `bootm`.
  
 
 # Use Cases
@@ -146,12 +146,12 @@ Modify the u-boot environment variable `m_autoboot` in a way that `... run m_aut
 
 # Installation
 
-0. Toolset
+## Toolset
 I've built a small toolset into the [Makefile](https://github.com/umiddelb/u-571/blob/master/macro/Makefile) targets aiming to make the u-boot macro coding a litle bit more convenient. U-boot macros are stored as one large character string into an u-boot enviroment variable which makes editing not very intuitive, e.g. no line feeds, no indentation, no comments. You will find all this elements in the input files (`*.uboot`). The make procdure will remove them in order to produre a clean u-boot macro. 
 
-0. Userland access to the u-boot environment
+## Userland access to the u-boot environment
 The u-boot environment is stored on dedicated space outside the filesystem. The u-boot-tools package contains the tool fw_setenv/fw_printenv to access the u-boot environment from the userland. This tool needs to be configured to your specific board, otherwise the make target `install` will fail. Please refer to [this article](https://github.com/umiddelb/armhf/wiki/Get-more-out-of-%22Das-U-Boot%22) for more details.
 
-0. [Choose your board](https://github.com/umiddelb/u-571/tree/master/board)
+## [Choose your board](https://github.com/umiddelb/u-571/tree/master/board)
 
-0. `make install`
+## `make install`
