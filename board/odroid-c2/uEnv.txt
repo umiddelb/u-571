@@ -4,4 +4,5 @@ k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=
 k_governor=governor=conservative
 k_video=no_console_suspend hdmimode=1080p60hz m_bpp=32
 m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
-run_pre_boot=0
+run_pre_boot=1
+m_pre_boot=fdt addr ${fdt_addr_r}; fdt rm /reserved-memory; fdt rm /aocec;
