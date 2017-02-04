@@ -12,5 +12,6 @@ bundle.uEnv: board_init.env
 	cat ../../macro/macro.ext4.uEnv >> $@
 	(cd ../../macro; make clean)
 
-install: bundle.uEnv
-	cp bundle.uEnv /boot/bundle.uEnv 
+install:
+	cat *.env | sudo fw_setenv -s -
+	(cd ../../macro; make install.ext4; make clean)

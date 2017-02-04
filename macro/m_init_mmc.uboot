@@ -1,9 +1,9 @@
 # m_init_mmc
 
-p_class="mmc", 
+p_class="mmc"; 
 p_device=${mmcdev};
 mmc dev ${p_device};
-if mmc rescan || test ${board} = "odroid-c1" || test ${board} = "pine64+" ; then
+if mmc rescan || test ${board} = "odroid-c1" || test ${board} = "sunxi" ; then
   true;
 else;
   false;
