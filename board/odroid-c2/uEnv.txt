@@ -2,7 +2,7 @@ bootscr=
 fdt=meson-gxbb-odroidc2.dtb
 kernel=uImage
 k_console=console=tty0 console=ttyAML0,115200n8
-k_rootfs=root=UUID=c505b023-943d-4d53-b293-15e91e6cc1a0 rootwait rw fsck.repair=yes
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
 k_governor=governor=interactive
 k_video=no_console_suspend
 m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video} net.ifnames=0 elevator=noop";
