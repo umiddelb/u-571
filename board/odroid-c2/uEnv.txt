@@ -1,11 +1,9 @@
 bootscr=
-k_console=console=tty0 console=ttyS0,115200n8
-k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
-k_governor=governor=conservative
-k_video=no_console_suspend hdmimode=1080p60hz m_bpp=32
-m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
-run_pre_boot=1
-m_pre_boot=fdt addr ${fdt_addr_r}; run fdt_rm_graphics; run fdt_rm_meson_timer;
-fdt_rm_graphics=fdt rm /reserved-memory; fdt rm /aocec; fdt rm /meson-fb; fdt rm /amhdmitx; fdt rm /picdec; fdt rm /ppmgr; fdt rm /meson-vout; fdt rm /mesonstream; fdt rm /deinterlace; fdt rm /codec_mm;
-fdt_rm_meson_timer=fdt rm /meson_timer; fdt rm /cpus/cpu@0/timer; fdt rm /cpus/cpu@1/timer; fdt rm /cpus/cpu@2/timer; fdt rm /cpus/cpu@3/timer;
-fdt_rm_arch_timer=fdt rm /timer;
+fdt=meson-gxbb-odroidc2.dtb
+kernel=uImage
+k_console=console=tty0 console=ttyAML0,115200n8
+k_rootfs=root=UUID=c505b023-943d-4d53-b293-15e91e6cc1a0 rootwait rw fsck.repair=yes
+k_governor=governor=interactive
+k_video=no_console_suspend
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video} net.ifnames=0 elevator=noop";
+run_pre_boot=0
