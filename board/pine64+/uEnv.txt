@@ -5,4 +5,4 @@ k_governor=governor=conservative
 k_video=no_console_suspend
 m_set_bootargs=setenv k_net "mac_addr=${ethaddr}"; setenv bootargs "${k_console} ${k_rootfs} ${k_net} ${k_governor} ${k_video} rootfstype=ext4 panic=10 consoleblank=0 enforcing=0 loglevel=1"; 
 run_pre_boot=1
-m_pre_boot=mw.l 0x1c2005c 1; mw.l 0x1c20000 0x80001010;
+m_pre_boot=mw.l 0x1c2005c 1; mw.l 0x1c20000 0x80001110;
