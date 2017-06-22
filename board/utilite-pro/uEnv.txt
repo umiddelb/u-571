@@ -1,7 +1,8 @@
 bootscr=
-k_console=console=tty0 console=ttymxc3,115200
+fdt=imx6q-utilite-pro.dtb
+k_console=console=tty0 console=ttymxc3,115200 earlycon
 k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw
 k_governor=governor=conservative
 k_video=mxcfb0:dev=hdmi,1920x1080M-24@50,if=RGB24
-m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video} net.ifnames=0 apparmor=1 security=apparmor cma=128M mtdparts=spi0.0:768k(uboot),256k(uboot-environment),-(reserved)";
 run_pre_boot=0
