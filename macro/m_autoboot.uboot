@@ -2,6 +2,6 @@
 # do autoboot
 
 p_conf=default;
-run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata;
+run m_autoboot_mmc || run m_autoboot_usb || run m_autoboot_sata || run m_autoboot_scsi;
 false;
 # vim:ft=sh

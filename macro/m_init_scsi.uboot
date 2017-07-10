@@ -1,0 +1,14 @@
+# m_init_sata
+
+if test "${scsidev}" != ""; then
+  p_class="scsi"; 
+  p_device=${scsidev};
+  if scsi scan; then
+    true;
+  else;
+    false;
+  fi;
+else;
+  false;
+fi
+# vim:ft=sh
