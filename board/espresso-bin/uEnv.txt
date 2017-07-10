@@ -1,0 +1,3 @@
+bootscr=
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video} ${k_mtdparts} net.ifnames=0 elevator=noop";
