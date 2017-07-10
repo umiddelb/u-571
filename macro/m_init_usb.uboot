@@ -1,11 +1,18 @@
 # m_init_usb
 
-p_class="usb"; 
-p_device=${usbdev};
-if usb start; then
-  if usb dev ${p_device}; then
-    true;
+if test "${usbdev}" != ""; then
+  p_class="usb"; 
+  p_device=${usbdev};
+  if usb start; then
+    if usb dev ${p_device}; then
+      true;
+    else;
+      false;
+    fi;
+  else;
+    false;
   fi;
+else;
+  false;
 fi;
-false;
 # vim:ft=sh

@@ -1,9 +1,13 @@
 # m_init_sata
 
-p_class="sata"; 
-p_device=${satadev};
-if sata init; then
-  true;
+if test "${satadev}" != ""; then
+  p_class="sata"; 
+  p_device=${satadev};
+  if sata init; then
+    true;
+  else;
+    false;
+  fi;
 else;
   false;
 fi;
