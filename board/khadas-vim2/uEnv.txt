@@ -1,0 +1,7 @@
+bootscr=
+k_console=console=ttyS0,115200 no_console_suspend earlyprintk=aml-uart,0xc81004c0
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
+k_governor=governor=interactive
+k_video=no_console_suspend hdmimode=1080p60hz m_bpp=32
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video}";
+run_pre_boot=0
