@@ -1,0 +1,9 @@
+bootscr=
+fdt=meson64_odroidn2.dtb
+kernel=Image
+k_console=console=tty0 console=ttyS0,115200n8
+k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
+k_governor=governor=interactive
+k_video=no_console_suspendhdmimode=1080p60hz m_bpp=32 cvbsmode=576cvbs voutmode=hdmi disablehpd=false
+m_set_bootargs=setenv bootargs "${k_console} ${k_rootfs} ${k_governor} ${k_video} net.ifnames=0 elevator=noop max_freq_a53=1896 max_freq_a73=1800 maxcpus=6";
+run_pre_boot=0
