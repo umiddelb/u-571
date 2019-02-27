@@ -1,5 +1,6 @@
 bootscr=
-k_console=console=ttyS0,115200 no_console_suspend earlyprintk=aml-uart,0xc81004c0
+fdt=meson-gxm-khadas-vim2.dtb
+k_console=console=ttyAML0,115200 no_console_suspend earlyprintk=aml-uart,0xc81004c0
 k_rootfs=root=UUID=deadbeef-dead-beef-dead-beefdeadbeef rootwait rw fsck.repair=yes
 k_governor=governor=interactive
 k_video=no_console_suspend hdmimode=1080p60hz m_bpp=32
